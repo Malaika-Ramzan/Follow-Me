@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FollowMe — Home</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+:root{--bg:#F5F1E8;--text:#111;--card:#fff;--accent:#C9A227;--muted:#6B675F;--line:#E6DFD1}
+body.dark{--bg:#121212;--text:#F5F1E8;--card:#1E1E1E;--accent:#D4AF37;--muted:#AAA;--line:#333}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+h1,h2,h3{font-family:Georgia,serif;font-weight:400;line-height:1.1}
+a{text-decoration:none;color:inherit}
+.eyebrow{display:inline-block;font-size:11px;letter-spacing:2.5px;font-weight:700;color:var(--accent);margin-bottom:14px}
+.sub{color:var(--muted);max-width:600px;margin:10px auto 36px;font-size:15px}
+header{position:fixed;top:0;left:0;width:100%;z-index:1000;background:rgba(245,241,232,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+body.dark header{background:rgba(18,18,18,0.95)}
+.nav-inner{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:14px 16px}
+.logo{font-size:22px;font-weight:900;letter-spacing:1px;white-space:nowrap}.logo span{color:var(--accent)}
+.links{display:flex;gap:28px;font-size:14px;font-weight:600}.links a.active{color:var(--accent)}
+.nav-actions{display:flex;gap:8px;align-items:center}
+.icon-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
+.hamburger{width:42px;height:42px;border-radius:10px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:22px;display:none;align-items:center;justify-content:center}
+.btn-primary{display:inline-block;background:#111;color:#fff;padding:12px 22px;border-radius:100px;font-weight:700;font-size:14px;border:none;cursor:pointer;white-space:nowrap}
+body.dark .btn-primary{background:#F5F1E8;color:#111}
+.btn-outline{display:inline-block;background:transparent;color:var(--text);padding:11px 22px;border-radius:100px;font-weight:700;font-size:14px;border:1.5px solid var(--text);white-space:nowrap}
+#canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:999;opacity:0.9;pointer-events:none}
+/* YAHI ASAL FIX HAI - har section poora screen, scroll par sab nazar aayega, click par sahi jagah rukega */
+section{position:relative;z-index:1;max-width:1200px;margin:auto;padding:110px 18px 60px;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;scroll-margin-top:70px}
+section.left{align-items:flex-start;text-align:left}
+.hero-content{max-width:850px;width:100%;text-align:center}.hero-content h1{font-size:clamp(36px,9vw,76px);letter-spacing:-1px}.hero-content h1 em{font-style:italic;color:var(--accent)}.hero-content>p{color:var(--muted);max-width:580px;margin:16px auto;font-size:15px}
+.hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.hero-stats{display:flex;gap:20px;justify-content:center;margin-top:32px;border-top:1px solid var(--line);padding-top:18px;flex-wrap:wrap}.hero-stats div{display:flex;flex-direction:column;min-width:80px}.hero-stats strong{font-size:20px}.hero-stats span{font-size:11px;color:var(--muted);letter-spacing:1px}
+.two-col{display:grid;grid-template-columns:1.2fr 0.8fr;gap:32px;align-items:center;width:100%}
+.two-col h2{font-size:clamp(28px,7vw,46px);margin-bottom:12px}.two-col p{color:var(--muted);margin-bottom:14px}
+.check-list{list-style:none;margin-top:18px}.check-list li{padding:8px 0;font-weight:600}
+.about-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px}.about-card h3{font-size:24px;margin-bottom:12px}.about-card p{color:var(--muted)}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}.mini-grid div{background:var(--bg);border-radius:14px;padding:14px}.mini-grid strong{display:block;font-size:20px}.mini-grid span{font-size:12px;color:var(--muted)}
+.center{text-align:center}.center h2{font-size:clamp(28px,7vw,46px);margin-bottom:12px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%;margin-top:24px;text-align:left}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px}.card.featured{background:#111;color:#fff}body.dark .card.featured{background:#F5F1E8;color:#111}
+.card .num{font-size:13px;letter-spacing:2px;color:var(--accent);margin-bottom:12px}.card h3{font-size:22px;margin-bottom:10px}.card p{color:var(--muted);font-size:14px;margin-bottom:16px}.card.featured p{color:#BBB}body.dark .card.featured p{color:#555}.card a{font-weight:700;font-size:14px}
+.work{height:210px;border-radius:20px;display:flex;align-items:flex-end;padding:20px;color:#fff}.work h3{font-size:22px}.work p{font-size:13px;opacity:0.9}
+.g1{background:linear-gradient(135deg,#C9A227,#8A6D1B)}.g2{background:linear-gradient(135deg,#1A1A1A,#4A4A4A)}.g3{background:linear-gradient(135deg,#7A8A6A,#4A5A40)}
+.testi-wrap{margin-top:32px;width:100%}.testi-wrap h2{font-size:28px;margin-bottom:16px;text-align:center}.testi{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px}.testi p{font-style:italic;color:var(--muted);margin-bottom:16px;font-size:15px}.testi strong{display:block}.testi span{font-size:12px;color:var(--muted)}
+.contact-form{max-width:560px;width:100%;margin:auto;display:flex;flex-direction:column;gap:12px}
+.contact-form input,.contact-form textarea{width:100%;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--text);font-size:16px;font-family:inherit;outline:none}
+footer{position:relative;z-index:1;border-top:1px solid var(--line);padding:32px 18px}.footer-inner{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}.footer-inner p{font-size:13px;color:var(--muted)}.footer-links{display:flex;gap:18px;font-size:14px;font-weight:600}
+.mobile-menu{position:fixed;inset:0;z-index:2000;background:rgba(245,241,232,0.98);display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center}
+body.dark .mobile-menu{background:rgba(18,18,18,0.98)}.mobile-menu.open{display:flex}.mobile-menu a{font-family:Georgia,serif;font-size:32px;padding:10px 20px}.mobile-menu .close-btn{position:absolute;top:18px;right:18px;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--card);font-size:22px;cursor:pointer}.mobile-menu .menu-btn{margin-top:18px}
+@media(max-width:850px){.links{display:none}.hamburger{display:flex}.nav-actions .btn-primary{display:none}.two-col{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr}.hero-btns{flex-direction:column;align-items:center}.hero-btns a{width:100%;max-width:300px;text-align:center}.footer-inner{flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<header><div class="nav-inner"><a href="#home" class="logo">FOLLOW<span>ME.</span></a><nav class="links"><a href="#home" class="active">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#portfolio">Portfolio</a><a href="#contact">Contact</a></nav><div class="nav-actions"><button class="icon-btn" onclick="toggleDark()">◐</button><a href="#contact" class="btn-primary">Get Started</a><button class="hamburger" onclick="toggleMenu()">☰</button></div></div></header>
+<div class="mobile-menu" id="mobileMenu"><button class="close-btn" onclick="toggleMenu()">✕</button><a href="#home" onclick="toggleMenu()">Home</a><a href="#about" onclick="toggleMenu()">About</a><a href="#services" onclick="toggleMenu()">Services</a><a href="#portfolio" onclick="toggleMenu()">Portfolio</a><a href="#contact" onclick="toggleMenu()">Contact</a><a href="#contact" onclick="toggleMenu()" class="btn-primary menu-btn">Get Started</a></div>
+
+<!-- HOME -->
+<section id="home"><div class="hero-content"><span class="eyebrow">● LIVE INTERACTIVE EXPERIENCE</span><h1>Design That<br><em>Moves With You.</em></h1><p>Move your cursor. Our signature creature follows you across the screen — a living example of creative coding built with HTML, CSS & JavaScript.</p><div class="hero-btns"><a href="#services" class="btn-primary">Explore Services →</a><a href="#portfolio" class="btn-outline">View Work</a></div><div class="hero-stats"><div><strong>100%</strong><span>Responsive</span></div><div><strong>60+</strong><span>Animated Segments</span></div><div><strong>&lt;1s</strong><span>Load Time</span></div></div></div></section>
+
+<!-- ABOUT -->
+<section id="about" class="left"><div class="two-col"><div><span class="eyebrow">ABOUT US</span><h2>We Build Websites<br>People Remember.</h2><p>FollowMe is a creative digital studio. We combine clean design, smooth animation and powerful code to create websites that feel alive.</p><p>Every pixel is designed for Mobile, Tablet, iPad, Laptop and Desktop — so your brand looks perfect everywhere.</p><ul class="check-list"><li>✓ Clean & Professional Design</li><li>✓ Fully Responsive Layout</li><li>✓ Fast, Secure & SEO Friendly</li></ul></div><div class="about-card"><h3>Our Mission</h3><p>To turn simple ideas into beautiful, interactive digital experiences that your visitors will never forget.</p><div class="mini-grid"><div><strong>2026</strong><span>Founded</span></div><div><strong>50+</strong><span>Projects</span></div></div></div></div></section>
+
+<!-- SERVICES -->
+<section id="services" class="center"><span class="eyebrow">OUR SERVICES</span><h2>What We Do Best</h2><p class="sub">Professional services for modern brands, startups and creators.</p><div class="grid-3"><div class="card"><div class="num">01</div><h3>Web Design</h3><p>Modern, elegant and premium website designs that match your brand identity.</p><a href="#contact">Learn More →</a></div><div class="card featured"><div class="num">02</div><h3>Interactive Animation</h3><p>Cursor effects, canvas animations and smooth scrolling that make your site unforgettable.</p><a href="#contact">Learn More →</a></div><div class="card"><div class="num">03</div><h3>Responsive Development</h3><p>One website that works perfectly on Mobile, iPad, iPhone, Laptop and Desktop.</p><a href="#contact">Learn More →</a></div></div></section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="left"><span class="eyebrow">PORTFOLIO</span><h2 style="font-size:clamp(28px,7vw,46px);margin-bottom:12px">Selected Work</h2><div class="grid-3"><div class="work g1"><div><h3>Ivory Gold</h3><p>Luxury Brand Website</p></div></div><div class="work g2"><div><h3>Charcoal Black</h3><p>Premium Portfolio</p></div></div><div class="work g3"><div><h3>Olive Sage</h3><p>Natural & Calm Brand</p></div></div></div><div class="testi-wrap"><h2>What Clients Say</h2><div class="grid-3"><div class="testi"><p>“The most beautiful and smooth website I have ever seen.”</p><strong>— Sarah M.</strong><span>Business Owner</span></div><div class="testi"><p>“It works perfectly on my iPhone, iPad and laptop.”</p><strong>— Ahmed K.</strong><span>Content Creator</span></div><div class="testi"><p>“Professional, fast and creative. My favourite part is the creature.”</p><strong>— Emily R.</strong><span>Designer</span></div></div></div></section>
+
+<!-- CONTACT -->
+<section id="contact" class="center"><h2>Let’s Work Together</h2><p class="sub">Tell us about your project. We will reply within 24 hours.</p><form class="contact-form" onsubmit="event.preventDefault();alert('Thank you! Your message has been sent.');"><input type="text" placeholder="Your Name" required><input type="email" placeholder="Your Email" required><textarea placeholder="Your Message" rows="4" required></textarea><button type="submit" class="btn-primary">Send Message</button></form></section>
+
+<footer><div class="footer-inner"><div class="logo">FOLLOW<span>ME.</span></div><p>© 2026 FollowMe. All Rights Reserved.<br>Built with HTML, CSS & JavaScript.</p><div class="footer-links"><a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#contact">Contact</a></div></div></footer>
+
+<script>
+function toggleDark(){document.body.classList.toggle('dark');}
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
+const canvas=document.getElementById('canvas');const ctx=canvas.getContext('2d');let W,H,gapSize=8;
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;if(W<600)gapSize=6;else if(W<1024)gapSize=7;else gapSize=8;}
+resize();window.addEventListener('resize',resize);
+let pointer={x:window.innerWidth/2,y:window.innerHeight/2};let target={x:window.innerWidth/2,y:window.innerHeight/2};
+function setTarget(x,y){target.x=x;target.y=y;}
+window.addEventListener('mousemove',function(e){setTarget(e.clientX,e.clientY);});
+window.addEventListener('touchmove',function(e){if(e.touches[0])setTarget(e.touches[0].clientX,e.touches[0].clientY);},{passive:true});
+window.addEventListener('touchstart',function(e){if(e.touches[0])setTarget(e.touches[0].clientX,e.touches[0].clientY);},{passive:true});
+const N=60;let points=[];for(let i=0;i<N;i++){points.push({x:W/2-i*5,y:H/2});}
+let hairs=[];for(let i=0;i<120;i++){hairs.push({len:20+Math.random()*70,angle:Math.random()*Math.PI*2});}
+let frm=0;
+function run(){requestAnimationFrame(run);frm+=0.08;pointer.x+=(target.x-pointer.x)*0.08;pointer.y+=(target.y-pointer.y)*0.08;points[0].x=pointer.x;points[0].y=pointer.y;for(let i=1;i<N;i++){let prev=points[i-1],curr=points[i];let dx=prev.x-curr.x,dy=prev.y-curr.y;let dist=Math.sqrt(dx*dx+dy*dy)||1;if(dist>gapSize){curr.x=prev.x-(dx/dist)*gapSize;curr.y=prev.y-(dy/dist)*gapSize;}curr.x+=Math.sin(frm+i*0.4)*0.6;curr.y+=Math.cos(frm+i*0.3)*0.6;}ctx.clearRect(0,0,W,H);let isDark=document.body.classList.contains('dark');let creatureColor=isDark?'#FFFFFF':'#111111';let hairColor=isDark?'rgba(255,255,255,0.45)':'rgba(0,0,0,0.28)';let eyeColor=isDark?'#121212':'#FFFFFF';ctx.strokeStyle=hairColor;ctx.lineWidth=1;for(let h of hairs){let hx=pointer.x+Math.sin(h.angle+frm)*130;let hy=pointer.y+Math.cos(h.angle+frm)*130;ctx.beginPath();ctx.moveTo(hx,hy);ctx.lineTo(hx+Math.cos(h.angle+frm*2)*h.len,hy+Math.sin(h.angle+frm*2)*h.len);ctx.stroke();}if(isDark){ctx.shadowColor='#D4AF37';ctx.shadowBlur=18;}else{ctx.shadowBlur=0;}ctx.strokeStyle=creatureColor;ctx.lineCap='round';for(let i=0;i<N-1;i++){ctx.lineWidth=13*(1-i/N)+2;ctx.beginPath();ctx.moveTo(points[i].x,points[i].y);ctx.lineTo(points[i+1].x,points[i+1].y);ctx.stroke();}ctx.shadowBlur=0;ctx.fillStyle=creatureColor;ctx.beginPath();ctx.arc(points[0].x,points[0].y,12,0,Math.PI*2);ctx.fill();ctx.fillStyle=eyeColor;ctx.beginPath();ctx.arc(points[0].x+4,points[0].y-3,2.5,0,Math.PI*2);ctx.fill();}
+run();
+</script>
+</body>
+</html>
